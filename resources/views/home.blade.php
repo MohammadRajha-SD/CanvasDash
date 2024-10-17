@@ -10,6 +10,8 @@
     <!-- WOW.js & Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <link rel="stylesheet" href="{{ Vite::asset('css/gridstack.min.css') }}">
+    <link rel="stylesheet" href="{{ Vite::asset('css/gridstack-extra.min.css') }}">
 </head>
 
 <body class="bg-gray-100 text-gray-900">
@@ -21,7 +23,7 @@
 
     <!-- Header Section -->
     <header class="bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-2 md:px-6 py-4 flex justify-between items-center">
             <!-- Logo: Switch based on screen size -->
             <div class="wow animate__animated animate__fadeInDown">
                 <picture>
@@ -32,18 +34,29 @@
 
             <div>
                 @if (Route::has('login'))
-                <nav class="-mx-3 flex flex-1 justify-end">
+                <nav class="flex flex-1 justify-end">
                     @auth
-                    {{-- <a href="{{ url('/dashboard') }}"
-                        class="rounded-md px-3 py-2 text-black ring-1 transition hover:text-black/70 wow animate__animated animate__fadeIn">
-                        Dashboard
-                    </a> --}}
+                    <!-- Authentication -->
+
                     <a href="{{ url('/dashboard') }}"
-                        class="ml-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 wow animate__animated animate__bounceIn">
+                        class=" bg-blue-600 text-white p-2 md:py-2 md:px-4 rounded-lg hover:bg-blue-700 wow animate__animated animate__bounceIn">
                         Dashboard
                     </a>
+
+                    <!-- Logout Form -->
+                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                        @csrf
+                    </form>
+
+                    <!-- Logout Button -->
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="ml-1 md:ml-2 bg-red-400 text-white p-2 md:py-2 md:px-4 rounded-lg hover:bg-red-700 wow animate__animated animate__bounceIn">
+                        {{ __('Log Out') }}
+                    </a>
+
                     @else
-                    <a href="{{ route('login') }}" class="text-blue-600 font-medium hover:underline">Login</a>
+                    <a href="{{ route('login') }}"
+                        class="text-blue-600 font-medium hover:underline mr-2 border-r-2 border-blue-200 pr-2">Login</a>
                     @if (Route::has('register'))
                     <a href="{{ route('register') }}" class="text-blue-600 font-medium hover:underline">Register</a>
                     @endif
@@ -136,7 +149,10 @@
             <p>&copy; 2024 CanvasDash. All rights reserved.</p>
         </div>
     </footer>
-
+    <script src="{{ Vite::asset('js/gridstack-all.js') }}"></script>
+    <script>
+        GridStack.init({column: 6});
+    </script>
 </body>
 
 </html>
