@@ -3,38 +3,20 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\UserPreference;
+use App\Models\Widget;
+
 class Dashboard extends Component
 {
     public $widgets = [];
 
     public function mount()
     {
-        $this->loadWidgets();
-    }
-
-    public function loadWidgets()
-    {
-        $preferences = UserPreference::where('user_id', auth()->id())->first();
-        $this->widgets = $preferences ? $preferences->widgets : $this->defaultWidgets();
+        $this->widgets = Widget::where('user_id', auth()->id())->get() ?? collect();
     }
 
     public function saveWidgets()
     {
-        UserPreference::updateOrCreate(
-            ['user_id' => auth()->id()],
-            ['widgets' => $this->widgets]
-        );
-        dd(['user_id' => auth()->id()],['widgets' => $this->widgets]);
-        // $this->dispatchBrowserEvent('widgets-saved', ['message' => 'Widgets saved!']);
-    }
-
-    private function defaultWidgets()
-    {
-        return [
-            ['name' => 'weather-widget', 'settings' => ['location' => 'London']],
-            ['name' => 'stock-widget', 'settings' => ['symbol' => 'AAPL']],
-        ];
+        $this->dispatch('widgets-saved', ['message' => 'Widgets layout saved successfully!']);
     }
     public function render()
     {

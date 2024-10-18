@@ -84,6 +84,7 @@
             </a>
         </div>
     </section>
+    
 
     <!-- Interactive Demo Section -->
     <section class="py-12 bg-white">
@@ -93,7 +94,7 @@
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-gray-100 p-6 rounded-lg shadow-md wow animate__animated animate__zoomIn">
-                    <h4 class="text-xl font-bold mb-4">Live Weather</h4>
+                    <h4 class="text-xl font-bold mb-4">🌤️ Live Weather</h4>
                     <div class="text-gray-700">22°C | Beirut</div>
                 </div>
                 <div class="bg-gray-100 p-6 rounded-lg shadow-md wow animate__animated animate__zoomIn"
@@ -118,8 +119,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-md wow animate__animated animate__flipInX">
                     <h4 class="text-xl font-bold mb-4">Weather</h4>
+                    {{-- <h1 class="text-xl font-extrabold text-center text-blue-500 mb-8">🌤️ Weather Forecast</h1> --}}
+
                     <p class="text-gray-600 mb-4">Monitor weather trends in your favorite locations.</p>
-                    <a href="#" class="text-blue-600 hover:underline">Add to Your Dashboard</a>
+                    @auth
+                    @if(App\Models\Widget::where('user_id', auth()->id())->where('name', 'weather-widget')->exists())
+                    <a href="{{route('dashboard')}}" class="text-blue-600 hover:underline">Go to Your
+                        Dashboard</a>
+                    @else
+                    <a href="{{route('add.weather.widget')}}" class="text-blue-600 hover:underline">Add to Your
+                        Dashboard</a>
+                    @endif
+                    @else
+                    <a href="{{route('login')}}" class="text-blue-600 hover:underline">Add to Your
+                        Dashboard</a>
+                    @endauth
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md wow animate__animated animate__flipInX"
                     data-wow-delay="0.2s">
@@ -149,7 +163,9 @@
             <p>&copy; 2024 CanvasDash. All rights reserved.</p>
         </div>
     </footer>
+
     <script src="{{ Vite::asset('js/gridstack-all.js') }}"></script>
+
     <script>
         GridStack.init({column: 6});
     </script>
