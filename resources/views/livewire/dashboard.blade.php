@@ -42,31 +42,25 @@
     });
 
 
-        grid.on('change', function (event, items) {
-            items.forEach(item => {
-                const id = item.el.getAttribute('data-gs-id');
-                const newWidth = item.w;
-                const newHeight = item.h;
-                const newX = item.x;
-                const newY = item.y;
-                @this.set('id', id);
-                @this.set('newX', newX);
-        @this.set('newY', newY);
-        @this.set('newWidth', newWidth);
-        @this.set('newHeight', newHeight);
-        @this.call('updateWidget');
-  // Emit Livewire event to update the widget
-//   Livewire.dispatch('updateWidget', {
-//                     id: id,
-//                     width: newWidth,
-//                     height: newHeight,
-//                     x: newX,
-//                     y: newY
-//                 });
-
-                grid.update(item.el, { w: newWidth, h: newHeight, x: newX, y: newY });
+    grid.on('change', function (event, items) {
+        items.forEach(item => {
+            const id = item.el.getAttribute('data-gs-id');
+            const newWidth = item.w;
+            const newHeight = item.h;
+            const newX = item.x;
+            const newY = item.y;
+    
+            Livewire.dispatch('updateWidget', {
+                id: id,
+                width: newWidth,
+                height: newHeight,
+                x: newX,
+                y: newY
             });
+
+            grid.update(item.el, { w: newWidth, h: newHeight, x: newX, y: newY });
         });
+    });
 });
 
 </script>

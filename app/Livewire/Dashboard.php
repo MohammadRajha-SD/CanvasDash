@@ -9,22 +9,20 @@ class Dashboard extends Component
 {
 
     protected $listeners = ['updateWidget', 'refresh' => '$refresh'];
-    public $id, $newX, $newY, $newWidth, $newHeight;
 
-    public function updateWidget()
+    public function updateWidget($id, $width, $height, $x, $y)
     {
-        $widget = Widget::findOrFail($this->id);
+        $widget = Widget::findOrFail($id);
 
         if ($widget) {
             $widget->update([
-                'width' => $this->newWidth,
-                'height' => $this->newHeight,
-                'x' => $this->newX,
-                'y' => $this->newY,
+                'width' => $width,
+                'height' => $height,
+                'x' => $x,
+                'y' => $y,
             ]);
         }
 
-        // $this->dispatch('refresh');
         return redirect('/dashboard');
     }
 
