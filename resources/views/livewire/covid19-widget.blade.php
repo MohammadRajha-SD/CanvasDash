@@ -1,5 +1,6 @@
 <div class="covid-widget">
     <h3>{{ $widget->title }}</h3>   
+    <p class="widget-description">{{ $widget->description }}</p> <!-- Add description here -->
     <hr />
     <canvas id="covidChart"></canvas>
 </div>
