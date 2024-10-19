@@ -25,7 +25,6 @@ class AddWeatherWidget extends Component
         'height' => 'required|integer|min:1|max:12',
         'longitude' => 'required|numeric',
         'latitude' => 'required|numeric',
-        'date' => 'nullable'
     ];
 
     public function mount()
@@ -62,12 +61,13 @@ class AddWeatherWidget extends Component
         
         $this->fetchWeatherData();
         
-        // weather-widget
         Widget::create([
             'user_id' => $this->user_id,
             'name' => 'weather-widget',
             'title' => $this->title,
             'color' => $this->color,
+            'x' => 0,
+            'y' => 0,
             'width' => $this->width,
             'height' => $this->height,
             'details' => json_encode([
@@ -81,7 +81,10 @@ class AddWeatherWidget extends Component
             ]),
         ]);
 
-        return redirect()->route('dashboard');
+         $this->dispatch('notification', [
+            'type' => 'success',
+            'message' => 'Weather widget saved successfully!'
+        ]);
     }
     public function render()
     {

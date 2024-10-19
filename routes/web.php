@@ -10,7 +10,10 @@ Route::get('/', function () {
     return view('home');
 });
 Route::middleware(['auth'])->group(function () {
-
+    // Route Livewire
+    \Livewire\Livewire::setUpdateRoute(function ($handle) {
+        return Route::post('/livewire/update', $handle);
+    });
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/add-weather-widget', AddWeatherWidget::class)->name('add.weather.widget');
 });

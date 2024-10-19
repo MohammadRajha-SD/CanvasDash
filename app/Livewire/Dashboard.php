@@ -7,19 +7,36 @@ use App\Models\Widget;
 
 class Dashboard extends Component
 {
-    public $widgets = [];
 
-    public function mount()
+    protected $listeners = ['updateWidget', 'refresh' => '$refresh'];
+    public $id, $newX, $newY, $newWidth, $newHeight;
+
+    public function updateWidget()
     {
-        $this->widgets = Widget::where('user_id', auth()->id())->get() ?? collect();
+        $widget = Widget::findOrFail($this->id);
+
+        if ($widget) {
+            $widget->update([
+                'width' => $this->newWidth,
+                'height' => $this->newHeight,
+                'x' => $this->newX,
+                'y' => $this->newY,
+            ]);
+        }
+
+        // $this->dispatch('refresh');
+        return redirect('/dashboard');
     }
 
     public function saveWidgets()
     {
         $this->dispatch('widgets-saved', ['message' => 'Widgets layout saved successfully!']);
     }
+
     public function render()
     {
-        return view('livewire.dashboard')->extends('layouts.app');
+        $widgets = Widget::where('user_id', auth()->id())->get() ?? collect();
+
+        return view('livewire.dashboard', compact('widgets'))->extends('layouts.app');
     }
 }

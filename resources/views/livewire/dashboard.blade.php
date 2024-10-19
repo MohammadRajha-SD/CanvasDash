@@ -1,14 +1,12 @@
 <div class="grid-stack">
     @foreach ($widgets as $widget)
-    <div class="grid-stack-item "  style="background-color: {{$widget->color}} !important;" data-gs-id="{{ $widget['id'] }}" data-gs-width="{{ $widget->width }}"
-        data-gs-height="{{ $widget->height }}" data-gs-x="{{ 0 }}" data-gs-y="{{ 0 }}">
-        <div class="grid-stack-item-content-xyz">
-            @livewire($widget->name, ['widget' => $widget], key($widget->name . '_' . $widget->id))
-        </div>
+    <div class="grid-stack-item " style="background-color: {{$widget->color}} !important;"
+        data-gs-id="{{ $widget['id'] }}" data-gs-width="{{ $widget->width }}" data-gs-height="{{ $widget->height }}"
+        data-gs-x="{{ $widget->x }}" data-gs-y="{{ $widget->y }}" wire:key="widget-{{ $widget->id }}">
+        @livewire($widget->name, ['widget' => $widget], key($widget->name . '_' . $widget->id))
     </div>
     @endforeach
 </div>
-
 
 @push('styles')
 <link href="{{ asset('gridstack/gridstack.min.css') }}" rel="stylesheet" />
@@ -26,22 +24,49 @@
 <script src="{{ asset('gridstack/gridstack-all.js') }}"></script>
 
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
     const grid = GridStack.init({
-        column: 12,
-        minRow: 1,
-        cellHeight: '100px',
-        margin: 5,
-    });
+      cellHeight: 80,
+      animate: true, 
+      float: true });
 
-    // Load items from the database
+    document.addEventListener('DOMContentLoaded', function () {
+
     document.querySelectorAll('.grid-stack-item').forEach(item => {
-        const width = parseInt(item.getAttribute('data-gs-width')) || 1; 
-        const height = parseInt(item.getAttribute('data-gs-height')) || 1; 
+        const width = parseInt(item.getAttribute('data-gs-width')) || 1;
+        const height = parseInt(item.getAttribute('data-gs-height')) || 1;
+        const y = parseInt(item.getAttribute('data-gs-y')) || 0;
+        const x = parseInt(item.getAttribute('data-gs-x')) || 0;
 
         grid.makeWidget(item);
-        grid.update(item, { w: width, h: height,  y:100, x:10});
+        grid.update(item, { w: width, h: height, x: x, y: y });
     });
+
+
+        grid.on('change', function (event, items) {
+            items.forEach(item => {
+                const id = item.el.getAttribute('data-gs-id');
+                const newWidth = item.w;
+                const newHeight = item.h;
+                const newX = item.x;
+                const newY = item.y;
+                @this.set('id', id);
+                @this.set('newX', newX);
+        @this.set('newY', newY);
+        @this.set('newWidth', newWidth);
+        @this.set('newHeight', newHeight);
+        @this.call('updateWidget');
+  // Emit Livewire event to update the widget
+//   Livewire.dispatch('updateWidget', {
+//                     id: id,
+//                     width: newWidth,
+//                     height: newHeight,
+//                     x: newX,
+//                     y: newY
+//                 });
+
+                grid.update(item.el, { w: newWidth, h: newHeight, x: newX, y: newY });
+            });
+        });
 });
 
 </script>

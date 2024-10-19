@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('title')->nullable();
             $table->string('color')->default('#4caf50');
+            $table->integer('x')->default(0);
+            $table->integer('y')->default(0);
             $table->integer('width')->default(4);
             $table->integer('height')->default(2);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
