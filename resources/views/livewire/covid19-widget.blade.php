@@ -1,5 +1,5 @@
 <div class="covid-widget">
-    <h3>{{ $widget->title }}</h3>
+    <h3>{{ $widget->title }}</h3>   
     <hr />
     <canvas id="covidChart"></canvas>
 </div>

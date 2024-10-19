@@ -17,7 +17,6 @@
 <body class="bg-gray-100 text-gray-900">
 
     <script>
-        // Initialize WOW.js
         new WOW().init();
     </script>
 
@@ -77,10 +76,8 @@
                 Drag-and-drop widgets, real-time data from multiple sources, and complete customization—designed for
                 you.
             </p>
-            <a href="#"
-                class="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 wow animate__animated animate__pulse"
-                data-wow-delay="0.5s">
-                Get Started Now
+            <a href="{{route('dashboard')}}" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 wow animate__animated animate__pulse" data-wow-delay="0.5s">
+                Go to my Dashboard
             </a>
         </div>
     </section>
