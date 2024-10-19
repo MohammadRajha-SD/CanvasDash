@@ -10,7 +10,12 @@
                 class="w-full mt-1 border rounded transition duration-200 focus:border-blue-500 focus:outline-none">
             @error('title') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
-
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700 mb-1">description</label>
+            <input type="text" id="description" wire:model="description"
+                class="w-full mt-1 border rounded transition duration-200 focus:border-blue-500 focus:outline-none">
+            @error('description') <span class="text-red-500">{{ $message }}</span> @enderror
+        </div>
         <div class="mb-4">
             <label for="color" class="block text-gray-700 mb-1">Color</label>
             <input type="color" id="color" wire:model="color"

@@ -10,8 +10,8 @@ class AddWeatherWidget extends Component
 {
     public $title = '';
     public $color = '#4caf50';
-    public $width = 4;
-    public $height = 2;
+    public $width = 3;
+    public $height = 3;
     public $date;
     public $longitude;
     public $latitude;

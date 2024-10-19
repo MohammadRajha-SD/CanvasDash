@@ -12,6 +12,13 @@
         </div>
 
         <div class="mb-4">
+            <label for="description" class="block text-gray-700 mb-1">description</label>
+            <input type="text" id="description" wire:model="description"
+                class="w-full mt-1 border rounded transition duration-200 focus:border-blue-500 focus:outline-none">
+            @error('description') <span class="text-red-500">{{ $message }}</span> @enderror
+        </div>
+
+        <div class="mb-4">
             <label for="color" class="block text-gray-700 mb-1">Color</label>
             <input type="color" id="color" wire:model="color"
                 class="w-full p-1 border rounded transition duration-200 focus:border-blue-500 focus:outline-none">
@@ -33,12 +40,7 @@
             </div>
         </div>
 
-        <div class="mb-4">
-            <label for="date" class="block text-gray-700 mb-1">Choose Date</label>
-            <input type="date" id="date" wire:model="date"
-                class="w-full p-2 border rounded-lg shadow-sm transition duration-200 focus:border-blue-500 focus:outline-none">
-            @error('date') <span class="text-red-500">{{ $message }}</span> @enderror
-        </div>
+        
 
         <footer class="mt-2 text-center flex flex-col sm:flex-row sm:space-x-4">
             <button type="submit"

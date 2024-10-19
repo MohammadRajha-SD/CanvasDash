@@ -4,15 +4,15 @@ namespace App\Livewire;
 
 use App\Models\Widget;
 use Livewire\Component;
-use Illuminate\Support\Facades\Http;
 
 class AddCovid19Widget extends Component
 {
     public $title = '';
     public $color = '#4caf50';
-    public $width = 4;
-    public $height = 2;
+    public $width = 3;
+    public $height = 3;
     public $user_id;
+    public $description;
     public $covid19Data;
 
     protected $rules = [
@@ -48,6 +48,7 @@ class AddCovid19Widget extends Component
             'user_id' => $this->user_id,
             'name' => 'covid19-widget',
             'title' => $this->title,
+            'description' => $this->description,
             'color' => $this->color,
             'x' => 0,
             'y' => 0,

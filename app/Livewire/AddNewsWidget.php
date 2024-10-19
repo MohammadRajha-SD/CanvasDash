@@ -10,15 +10,15 @@ class AddNewsWidget extends Component
 {
     public $title = '';
     public $color = '#4caf50';
-    public $width = 4;
-    public $height = 2;
-    public $date;
+    public $width = 3;
+    public $height = 3;
+    public $description;
     public $user_id;
-
     public $newsData;
 
     protected $rules = [
         'title' => 'required|string|max:255',
+        'description' => 'nullable|string|max:255',
         'color' => 'required|string',
         'width' => 'required|integer|min:1|max:12',
         'height' => 'required|integer|min:1|max:12',
@@ -26,7 +26,6 @@ class AddNewsWidget extends Component
 
     public function mount()
     {
-        $this->date = now()->format('Y-m-d');
         $this->user_id = auth()->id();
         $this->newsData = [];
 
@@ -37,7 +36,26 @@ class AddNewsWidget extends Component
 
     public function fetchNewsData()
     {
-       
+        $apiKey = '4f23a9ca8eec411290e0e52325d85b30';
+        $url = 'https://newsapi.org/v2/top-headlines?language=en&category=general&apiKey=' . $apiKey;
+
+        try {
+            $response = Http::withOptions(['verify' => false])->get($url);
+            if ($response->successful()) {
+                $articles = $response->json()['articles'];
+                $this->newsData = array_slice($articles, 0, 3);
+            } else {
+                $this->dispatch('notification', [
+                    'type' => 'error',
+                    'message' => 'Failed to fetch news data.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            $this->dispatch('notification', [
+                'type' => 'error',
+                'message' => 'An error occurred: ' . $e->getMessage()
+            ]);
+        }
     }
 
     public function saveWidget()
@@ -50,20 +68,13 @@ class AddNewsWidget extends Component
             'user_id' => $this->user_id,
             'name' => 'news-widget',
             'title' => $this->title,
+            'description' => $this->description,
             'color' => $this->color,
             'x' => 0,
             'y' => 0,
             'width' => $this->width,
             'height' => $this->height,
-            'details' => json_encode([
-                'longitude' => $this->longitude,
-                'latitude' => $this->latitude,
-                'icon' => $this->weatherData['icon'],
-                'datetime' => $this->weatherData['datetime'],
-                'description' => $this->weatherData['description'] ?? 'No description available',
-                'temp' => $this->weatherData['temp'],
-                'conditions' => $this->weatherData['conditions'],
-            ]),
+            'details' => json_encode($this->newsData),
         ]);
 
         $this->dispatch('notification', [
