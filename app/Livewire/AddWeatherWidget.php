@@ -55,6 +55,7 @@ class AddWeatherWidget extends Component
             $this->weatherData = ['error' => $e->getMessage()];
         }
     }
+    
     public function saveWidget()
     {
         $this->validate();
