@@ -22,9 +22,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/add-weather-widget', AddWeatherWidget::class)->name('add.weather.widget');
-    Route::get('/add-covid-19-widget', AddCovid19Widget::class)->name('add.covid-19.widget');
+    Route::get('/add-covid-19-widget', AddCovid19Widget::class)->name('add.covid19.widget');
     Route::get('/add-news-widget', AddNewsWidget::class)->name('add.news.widget');
-    Route::get('/add-stock-market-widget', AddStockMarketWidget::class)->name('add.stock-market.widget');
+    Route::get('/add-stock-market-widget', AddStockMarketWidget::class)->name('add.stockmarket.widget');
     Route::get('/add-map-widget', AddMapWidget::class)->name('add.map.widget');
     Route::get('/map-widget', MapWidget::class)->name('map.widget');
 });
