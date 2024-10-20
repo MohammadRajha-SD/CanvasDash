@@ -43,7 +43,11 @@ class AddNewsWidget extends Component
             $response = Http::withOptions(['verify' => false])->get($url);
             if ($response->successful()) {
                 $articles = $response->json()['articles'];
-                $this->newsData = array_slice($articles, 0, 3);
+                if($articles){
+                    $this->newsData = array_slice($articles, 0, 3);
+                }else{
+                    $this->newsData = [];
+                }
             } else {
                 $this->dispatch('notification', [
                     'type' => 'error',

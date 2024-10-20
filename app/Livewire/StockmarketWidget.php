@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class Covid19Widget extends Component
+class StockmarketWidget extends Component
 {
     public $widget;
 
@@ -12,9 +12,9 @@ class Covid19Widget extends Component
     {
         $this->widget = $widget ?? collect();
     }
-    
+
     public function render()
     {
-        return view('livewire.covid19-widget');
+        return view('livewire.stockmarket-widget');
     }
 }

@@ -10,7 +10,6 @@ class NewsWidget extends Component
 
     public function mount($widget)
     {
-        // dd($widget->details);
         $this->widget = $widget ?? collect();
         $this->widget->details = json_decode($this->widget->details, true);
     }

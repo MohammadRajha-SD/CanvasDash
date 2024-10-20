@@ -116,9 +116,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-md wow animate__animated animate__flipInX">
                     <h4 class="text-xl font-bold mb-4">Weather</h4>
-                    {{-- <h1 class="text-xl font-extrabold text-center text-blue-500 mb-8">🌤️ Weather Forecast</h1>
-                    --}}
-
                     <p class="text-gray-600 mb-4">Monitor weather trends in your favorite locations.</p>
                     @auth
                     @if(App\Models\Widget::where('user_id', auth()->id())->where('name', 'weather-widget')->exists())
@@ -137,7 +134,18 @@
                     data-wow-delay="0.2s">
                     <h4 class="text-xl font-bold mb-4">Stocks</h4>
                     <p class="text-gray-600 mb-4">Track real-time stock prices and trends.</p>
-                    <a href="#" class="text-blue-600 hover:underline">Add to Your Dashboard</a>
+                    @auth
+                    @if(App\Models\Widget::where('user_id', auth()->id())->where('name', 'stockmarket-widget')->exists())
+                    <a href="{{route('dashboard')}}" class="text-blue-600 hover:underline">Go to Your
+                        Dashboard</a>
+                    @else
+                    <a href="{{route('add.stock-market.widget')}}" class="text-blue-600 hover:underline">Add to Your
+                        Dashboard</a>
+                    @endif
+                    @else
+                    <a href="{{route('login')}}" class="text-blue-600 hover:underline">Add to Your
+                        Dashboard</a>
+                    @endauth
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md wow animate__animated animate__flipInX"
                     data-wow-delay="0.4s">
