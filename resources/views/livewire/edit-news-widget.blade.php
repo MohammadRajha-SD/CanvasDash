@@ -1,6 +1,6 @@
 <div class="rounded-lg w-full px-4 bg-white">
     <header class="text-center">
-        <h4 class="text-2xl text-blue-400 border-b py-3 mb-3 font-bold">Update News Widget</h4>
+        <h4 class="text-2xl text-blue-400 border-b py-3 mb-3 font-bold">Edit News Widget</h4>
     </header>
     <div class="flex-1 overflow-y-auto max-h-[400px]">
         <form wire:submit.prevent="saveWidget">
