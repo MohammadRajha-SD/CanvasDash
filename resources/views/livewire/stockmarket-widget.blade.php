@@ -114,7 +114,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        // fetchStockMarketData();
+        fetchStockMarketData();
     });
 </script>
 @endpush
