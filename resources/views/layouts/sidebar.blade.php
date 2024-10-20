@@ -42,7 +42,7 @@
 @foreach(['map', 'covid19', 'weather', 'news', 'stockmarket'] as $widget)
 <div id="{{$widget}}-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-        @livewire('edit-news-widget', ['name' => $widget], key('edit_'. $widget))
+        @livewire('edit-'.$widget.'-widget', ['name' => $widget], key('edit_'. $widget))
     </div>
 </div>
 @endforeach
