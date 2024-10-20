@@ -2,7 +2,7 @@
     <header class="text-center">
         <h4 class="text-2xl text-blue-400 border-b py-3 mb-3 font-bold">Edit Stock Market Widget</h4>
     </header>
-    
+
     <div class="flex-1 overflow-y-auto max-h-[400px]">
         <form wire:submit.prevent="saveWidget">
             <div class="mb-4">
