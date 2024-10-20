@@ -18,11 +18,14 @@
     @stack('styles')
 </head>
 
-<body>
-    @yield('content')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <div class="min-h-screen rounded-lg w-full px-4 bg-white">
+<body class="flex">
+    @include('layouts.sidebar') <!-- Sidebar Included -->
+
+    <div class="flex-grow min-h-screen rounded-lg w-full px-4 bg-white">
+        @yield('content')
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
         <script>
             window.addEventListener('notification', event => {
@@ -38,7 +41,7 @@
                 if (event.detail[0].type == 'success') {
                     toastr.success(event.detail[0].message);
                     setTimeout(() => {
-                        window.location.href='/dashboard';
+                        window.location.href = '/dashboard';
                     }, 1000);
                 } else if (event.detail[0].type == 'error') {
                     toastr.error(event.detail[0].message);
@@ -46,6 +49,7 @@
             });
         </script>
     </div>
+
     @livewireScripts
     @stack('scripts')
 </body>
