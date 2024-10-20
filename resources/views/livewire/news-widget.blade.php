@@ -5,9 +5,30 @@
     <div class="overflow-y-auto h-full">
         @if (!empty($widget->details))
         @foreach ($widget->details as $article)
-        <div class="news-article border-b-2 mt-1">
-            <h4 class="font-bold">{{ $article['title'] }}</h4>
-            <p class="text-sm">{{ Str::limit($article['description'], 50) }}</p>
+        <div class="news-article border-b-2 mt-4 p-3">
+            <!-- Article Image -->
+            <img src="{{ $article['urlToImage'] }}" 
+                 alt="{{ $article['title'] }}" 
+                 class="w-full h-48 object-cover rounded-md mb-3">
+    
+            <!-- Article Title -->
+            <h4 class="font-bold text-xl">
+                <a href="{{ $article['url'] }}" target="_blank" class="hover:underline">
+                    {{ $article['title'] }}
+                </a>
+            </h4>
+    
+            <!-- Description -->
+            <p class="text-sm mb-2 text-white">
+                {{ Str::limit($article['description'], 100) }}
+            </p>
+    
+            <!-- Article Meta -->
+            <div class="text-xs text-white">
+                <p>Author: {{ $article['author'] ?? 'Unknown' }}</p>
+                <p>Source: {{ $article['source']['name'] ?? 'N/A' }}</p>
+                <p>Published At: {{ \Carbon\Carbon::parse($article['publishedAt'])->format('F j, Y, g:i A') }}</p>
+            </div>
         </div>
         @endforeach
         @else
