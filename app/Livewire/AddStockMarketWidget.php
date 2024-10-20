@@ -54,6 +54,7 @@ class AddStockMarketWidget extends Component
             'message' => 'Stock Market widget saved successfully!'
         ]);
     }
+    
     public function render()
     {
         return view('livewire.add-stock-market-widget')->extends('layouts.app');
