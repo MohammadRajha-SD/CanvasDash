@@ -113,7 +113,7 @@
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h3 class="text-2xl font-semibold text-gray-800 mb-8 wow animate__animated animate__fadeIn">Choose from a
                 Variety of Widgets</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-md wow animate__animated animate__flipInX">
                     <h4 class="text-xl font-bold mb-4">Weather</h4>
                     <p class="text-gray-600 mb-4">Monitor weather trends in your favorite locations.</p>
@@ -180,6 +180,20 @@
                     @else
                     <a href="{{route('login')}}" class="text-blue-600 hover:underline">Add to Your
                         Dashboard</a>
+                    @endauth
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md wow animate__animated animate__flipInX" data-wow-delay="0.6s">
+                    <h4 class="text-xl font-bold mb-4">Interactive Map</h4>
+                    <p class="text-gray-600 mb-4">Explore locations relevant to you on our interactive map.</p>
+                    
+                    @auth
+                        @if(App\Models\Widget::where('user_id', auth()->id())->where('name', 'map-widget')->exists())
+                            <a href="{{ route('dashboard') }}" class="text-blue-600 hover:underline">Go to Your Dashboard</a>
+                        @else
+                            <a href="{{ route('add.map.widget') }}" class="text-blue-600 hover:underline">Add Map to Your Dashboard</a>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Login to Add Map to Your Dashboard</a>
                     @endauth
                 </div>
             </div>

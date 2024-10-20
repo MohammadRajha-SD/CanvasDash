@@ -14,14 +14,12 @@
             background-color: #f8f9fa;
         }
     </style>
-    @stack('styles')
     @livewireStyles
-
+    @stack('styles')
 </head>
 
 <body>
-        @yield('content')
-    @stack('scripts')
+    @yield('content')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <div class="min-h-screen rounded-lg w-full px-4 bg-white">
@@ -49,7 +47,7 @@
         </script>
     </div>
     @livewireScripts
-
+    @stack('scripts')
 </body>
 
 </html>

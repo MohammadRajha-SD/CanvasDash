@@ -16,7 +16,7 @@
         border-radius: 8px;
         padding: 15px;
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    }
+    }  
 </style>
 @endpush
 
