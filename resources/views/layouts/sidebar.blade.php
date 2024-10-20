@@ -10,6 +10,12 @@
     </div>
     <nav class="flex-grow">
         <ul class="space-y-4 mt-6 mx-2">
+            <li>
+                <a href="{{route('home')}}"
+                    class="text-blue-500 block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:shadow-lg font-serif">
+                    Home
+                </a>
+            </li>
             @foreach(['map', 'covid19', 'weather', 'news', 'stockmarket'] as $widget)
             <li>
                 @if(!App\Models\Widget::where('user_id', auth()->id())->where('name', "{$widget}-widget")->exists())
@@ -29,7 +35,13 @@
             @endforeach
 
             <li>
-                <a href="/logout"
+                <!-- Logout Form -->
+                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                    @csrf
+                </form>
+
+                <!-- Logout Button -->
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                     class="text-red-500 block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-red-500 hover:text-white hover:shadow-lg font-serif">
                     Logout
                 </a>

@@ -13,7 +13,7 @@ use App\Livewire\MapWidget;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 Route::middleware(['auth'])->group(function () {
     // Route Livewire
     \Livewire\Livewire::setUpdateRoute(function ($handle) {
