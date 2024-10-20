@@ -1,10 +1,10 @@
 <!-- Map Container -->
 <div class="map-widget w-full text-white overflow-auto">
-    <div class="px-2">
+    {{-- <div class="px-2">
         <h3 class="font-semibold">{{ $widget->title }}</h3>
         <p class="font-serif">{{ $widget->description }}</p>
-    </div>
-    <div id="map" class="w-full overflow-auto" style="height: {{ $height }}; width:{{$width}}"></div>
+    </div> --}}
+    <div id="map" class="w-full overflow-auto z-10" style="height: {{ $height }}; width:{{$width}}"></div>
 </div>
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"

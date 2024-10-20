@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Dashboard - Landing Page</title>
+    <title>CanvasDash - Home Page</title>
+
     @vite('resources/css/app.css')
 
     <!-- WOW.js & Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <link rel="stylesheet" href="{{ Vite::asset('css/gridstack.min.css') }}">
-    <link rel="stylesheet" href="{{ Vite::asset('css/gridstack-extra.min.css') }}">
 </head>
 
 <body class="bg-gray-100 text-gray-900">
@@ -160,7 +159,7 @@
                     <a href="{{route('dashboard')}}" class="text-blue-600 hover:underline">Go to Your
                         Dashboard</a>
                     @else
-                    <a href="{{route('add.covid-19.widget')}}" class="text-blue-600 hover:underline">Add to Your
+                    <a href="{{route('add.covid19.widget')}}" class="text-blue-600 hover:underline">Add to Your
                         Dashboard</a>
                     @endif
                     @else
@@ -213,10 +212,8 @@
         </div>
     </footer>
 
-    <script src="{{ Vite::asset('js/gridstack-all.js') }}"></script>
-
     <script>
-        GridStack.init({column: 6});
+        // GridStack.init({column: 6});
     </script>
 </body>
 

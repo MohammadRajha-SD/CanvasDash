@@ -1,4 +1,4 @@
-<div class="rounded-lg w-full px-4 bg-white">
+<div class="rounded-lg w-full px-4 bg-white z-50">
     <header class="text-center">
         <h4 class="text-2xl text-blue-400 border-b py-3 mb-3 font-bold">Edit Map Widget</h4>
     </header>

@@ -39,9 +39,9 @@ class EditWeatherWidget extends Component
             ->where('name', strtolower($name) . '-widget')
             ->first();
 
-        $this->widget->details = json_decode($this->widget->details, true);
 
         if ($this->widget) {
+            $this->widget->details = json_decode($this->widget->details, true);
             $this->title = $this->widget->title;
             $this->description = $this->widget->description;
             $this->color = $this->widget->color;

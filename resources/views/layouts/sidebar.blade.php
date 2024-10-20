@@ -42,7 +42,7 @@
 
                 <!-- Logout Button -->
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                    class="text-red-500 block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-red-500 hover:text-white hover:shadow-lg font-serif">
+                    class="text-red-500 block px-4 py-2  rounded-lg transition-all duration-300 hover:bg-red-500 hover:text-white hover:shadow-lg font-serif">
                     Logout
                 </a>
             </li>

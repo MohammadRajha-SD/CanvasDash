@@ -10,6 +10,7 @@
 
 @push('styles')
 <link href="{{ asset('gridstack/gridstack.min.css') }}" rel="stylesheet" />
+
 @endpush
 
 @push('scripts')

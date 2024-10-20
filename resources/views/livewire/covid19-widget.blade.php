@@ -39,7 +39,6 @@ async function fetchCovidData() {
         renderCovidChart(data);
     } catch (error) {
         console.error('Error fetching COVID-19 data:', error);
-        alert('Could not fetch COVID-19 data. Please try again later.');
     }
 }
 
