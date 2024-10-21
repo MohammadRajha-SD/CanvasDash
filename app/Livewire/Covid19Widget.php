@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Widget;
 use Livewire\Component;
 
 class Covid19Widget extends Component
@@ -10,7 +11,8 @@ class Covid19Widget extends Component
 
     public function mount($widget)
     {
-        $this->widget = $widget ?? collect();
+        $this->widget = Widget::findOrFail($widget) ?? collect();
+        
     }
     
     public function render()

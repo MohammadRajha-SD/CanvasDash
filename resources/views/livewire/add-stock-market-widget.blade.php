@@ -12,12 +12,12 @@
         </div>
 
         <div class="mb-4">
-            <label for="description" class="block text-gray-700 mb-1">description</label>
+            <label for="description" class="block text-gray-700 mb-1">Description</label>
             <input type="text" id="description" wire:model="description"
                 class="w-full mt-1 border rounded transition duration-200 focus:border-blue-500 focus:outline-none">
             @error('description') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
-        
+
         <div class="mb-4">
             <label for="color" class="block text-gray-700 mb-1">Color</label>
             <input type="color" id="color" wire:model="color"
@@ -41,11 +41,50 @@
         </div>
 
         <footer class="mt-2 text-center flex flex-col sm:flex-row sm:space-x-4">
-
             <button type="submit"
                 class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 sm:mt-0 hover:bg-blue-700 transition duration-200">
                 Save
             </button>
         </footer>
     </form>
+
+    <script>
+        async function fetchStockMarketData() {
+            const apiKey = 'csao1q9r01qobflkc020csao1q9r01qobflkc02g';
+            const url = `https://finnhub.io/api/v1/quote?symbol=AAPL&token=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                console.log(data); // Log the entire API response for debugging
+                
+                // Check if the API returned an error message
+                if (data.error) {
+                    console.error('API error:', data.error);
+                    return; // Exit if there is an API error
+                }
+                
+                // Prepare the stock market data for Livewire
+                const formattedData = [{
+                    price: data.c,
+                    high: data.h,
+                    low: data.l,
+                    open: data.o,
+                    previousClose: data.pc,
+                    time: new Date(data.t * 1000).toISOString(), // Convert timestamp to ISO format
+                }];
+    
+                // Emit the event to Livewire
+                Livewire.dispatch('setStockMarketData', formattedData);
+            } catch (error) {
+                console.error('Error fetching stock data:', error);
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStockMarketData();
+        });
+    </script>
+
 </div>

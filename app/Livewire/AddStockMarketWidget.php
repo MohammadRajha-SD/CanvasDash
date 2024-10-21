@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Livewire;
 
 use App\Models\Widget;
@@ -13,24 +12,30 @@ class AddStockMarketWidget extends Component
     public $height = 3;
     public $user_id;
     public $description;
-    public $stockMarketData;
+    public $stockMarketData = [];
 
     protected $rules = [
         'title' => 'required|string|max:255',
         'color' => 'required|string',
         'width' => 'required|integer|min:1|max:12',
         'height' => 'required|integer|min:1|max:12',
+        'stockMarketData' => 'required|array'
     ];
+
+    protected $listeners = ['setStockMarketData'];
 
     public function mount()
     {
-
         $this->user_id = auth()->id();
-        $this->stockMarketData = [];
 
         if (Widget::where('user_id', $this->user_id)->where('name', 'stockmarket-widget')->exists()) {
             return redirect('/dashboard');
         }
+    }
+
+    public function setStockMarketData($data)
+    {
+        $this->stockMarketData = $data;
     }
 
     public function saveWidget()
@@ -47,6 +52,7 @@ class AddStockMarketWidget extends Component
             'y' => 0,
             'width' => $this->width,
             'height' => $this->height,
+            'details' => json_encode($this->stockMarketData),
         ]);
 
         $this->dispatch('notification', [
@@ -54,7 +60,7 @@ class AddStockMarketWidget extends Component
             'message' => 'Stock Market widget saved successfully!'
         ]);
     }
-    
+
     public function render()
     {
         return view('livewire.add-stock-market-widget')->extends('layouts.app');

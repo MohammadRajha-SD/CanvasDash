@@ -2,23 +2,25 @@
 
 namespace App\Livewire;
 
+use App\Models\Widget;
 use Livewire\Component;
 
 class MapWidget extends Component
 {
     public $latitude = 33.8938;
     public $longitude = 35.5018;
-    public $widget;
-    public $height;
+    public $widget = 3;
+    public $height = 3;
     public $width;
-    
+
     protected $listeners = ['updateLocation'];
 
     public function mount($widget)
     {
-        $this->widget = $widget ?? collect();
-        $this->width = ($widget['width'] * 110) . 'px';
-        $this->height = ($widget['height'] * 80) . 'px';
+        $this->widget = Widget::findOrFail($widget) ?? collect();
+        
+        // $this->width = ($widget['width'] * 110) . 'px';
+        // $this->height = ($widget['height'] * 80) . 'px';
     }
     public function updateLocation($lat, $lng)
     {

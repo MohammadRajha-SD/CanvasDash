@@ -8,27 +8,24 @@ use App\Models\Widget;
 class Dashboard extends Component
 {
 
-    protected $listeners = ['updateWidget', 'refresh' => '$refresh'];
+    protected $listeners = ['updateWidgets'];
 
-    public function updateWidget($id, $width, $height, $x, $y)
+    public function updateWidgets($widgets)
     {
-        $widget = Widget::findOrFail($id);
+        foreach ($widgets as $widget) {
+            $current_widget = Widget::findOrFail($widget['id']);
 
-        if ($widget) {
-            $widget->update([
-                'width' => $width,
-                'height' => $height,
-                'x' => $x,
-                'y' => $y,
-            ]);
+            if ($current_widget) {
+                $current_widget->update([
+                    'width' => $widget['width'],
+                    'height' => $widget['height'],
+                    'x' => $widget['x'],
+                    'y' => $widget['y']
+                ]);
+
+                return redirect('/dashboard');
+            }
         }
-
-        return redirect('/dashboard');
-    }
-
-    public function saveWidgets()
-    {
-        $this->dispatch('widgets-saved', ['message' => 'Widgets layout saved successfully!']);
     }
 
     public function render()

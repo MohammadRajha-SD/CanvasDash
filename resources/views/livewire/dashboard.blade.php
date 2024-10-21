@@ -1,59 +1,92 @@
-<div class="grid-stack">
-    @foreach ($widgets as $widget)
-    <div class="grid-stack-item " style="background-color: {{$widget->color}} !important;"
-        data-gs-id="{{ $widget['id'] }}" data-gs-width="{{ $widget->width }}" data-gs-height="{{ $widget->height }}"
-        data-gs-x="{{ $widget->x }}" data-gs-y="{{ $widget->y }}" wire:key="widget-{{ $widget->id }}">
-        @livewire($widget->name, ['widget' => $widget], key($widget->name . '_' . $widget->id))
+<div class="h-screen flex flex-col">
+    <div class="grid-stack flex-1">
+        @foreach($widgets as $widget)
+        <div class="grid-stack-item" wire:key="grid-item-{{ $widget->id }}" data-gs-id="{{ $widget->id }}"
+            data-gs-width="{{ $widget->width }}" data-gs-x="{{ $widget->x }}" data-gs-y="{{ $widget->y }}"
+            data-gs-height="{{ $widget->height }}">
+            <div class="grid-stack-item-content" style="background-color: {{$widget->color}}">
+                @livewire($widget->name, ['widget' => $widget->id], key($widget->name . '_' . $widget->id))
+            </div>
+        </div>
+
+        @endforeach
     </div>
-    @endforeach
+
+    <footer class="p-4 flex justify-between items-center fixed bottom-0 w-full">
+        <button class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded" id="save-widgets-btn">
+            Save Widgets
+        </button>
+    </footer>
 </div>
 
 @push('styles')
 <link href="{{ asset('gridstack/gridstack.min.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('gridstack.css') }}" />
+<script src="{{ asset('gridstack/gridstack-all.js') }}"></script>
 @endpush
 
 @push('scripts')
-<script src="{{ asset('gridstack/gridstack-all.js') }}"></script>
+<script>
+    let updatedWidgets = [];
 
-<script type="text/javascript">
-    let grid = GridStack.init({
-        float: true,
-        cellHeight: 70,
-        acceptWidgets: true,
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+        let grid = GridStack.init({
+            float: true,
+            cellHeight: 120,
+            acceptWidgets: true,
+        });
 
+        // Initialize grid items with saved positions
+        document.querySelectorAll('.grid-stack-item').forEach(item => {
+            const id = parseInt(item.getAttribute('data-gs-id'));
+            const width = parseInt(item.getAttribute('data-gs-width'));
+            const height = parseInt(item.getAttribute('data-gs-height'));
+            const x = parseInt(item.getAttribute('data-gs-x'));
+            const y = parseInt(item.getAttribute('data-gs-y'));
 
-    document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.grid-stack-item').forEach(item => {
-        const width = parseInt(item.getAttribute('data-gs-width')) || 1;
-        const height = parseInt(item.getAttribute('data-gs-height')) || 1;
-        const x = parseInt(item.getAttribute('data-gs-x')) || 0;
-        const y = parseInt(item.getAttribute('data-gs-y')) || 0;
+            grid.makeWidget(item);
+            grid.update(item, { w: width, h: height, x, y, id:id });
+        });
 
-        grid.makeWidget(item);
-        grid.update(item, { w: Math.max(1, width), h: Math.max(1, height), x, y });
-    });
+        // Merge changes into the `updatedWidgets` array
+        function mergeWidgetChanges(newItems) {
+            newItems.forEach(newItem => {
+                const existingIndex = updatedWidgets.findIndex(
+                    widget => widget.id === newItem.el.getAttribute('data-gs-id')
+                );
 
-    grid.on('change', function (event, items) {
-        items.forEach(item => {
-            const id = item.el.getAttribute('data-gs-id');
-            const newWidth = Math.max(1, item.w); 
-            const newHeight = Math.max(1, item.h); 
-            const newX = item.x;
-            const newY = item.y;
+                const widgetData = {
+                    id: newItem.el.getAttribute('data-gs-id'),
+                    width: newItem.w,
+                    height: newItem.h,
+                    x: newItem.x,
+                    y: newItem.y
+                };
 
-            Livewire.dispatch('updateWidget', {
-                id,
-                width: newWidth,
-                height: newHeight,
-                x: newX,
-                y: newY
+                if (existingIndex !== -1) {
+                    // Update the existing widget data
+                    updatedWidgets[existingIndex] = widgetData;
+                } else {
+                    // Add new widget data
+                    updatedWidgets.push(widgetData);
+                }
             });
+        }
 
-            grid.update(item.el, { w: newWidth, h: newHeight, x: newX, y: newY });
+        // Listen for layout changes
+        grid.on('change', function(event, items) {
+            mergeWidgetChanges(items);
+        });
+
+        // Save button click event to send updates to Livewire
+        document.getElementById('save-widgets-btn').addEventListener('click', function() {
+            if (updatedWidgets.length > 0) {
+                Livewire.dispatch('updateWidgets', {widgets : updatedWidgets});
+                toastr.success('Widgets saved successfully!', 'Success');
+            } else {
+                toastr.info('No changes to save.', 'Info');
+            }
         });
     });
-});
-
 </script>
 @endpush

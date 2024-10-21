@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Widget;
 use Livewire\Component;
 
 class WeatherWidget extends Component
@@ -10,7 +11,7 @@ class WeatherWidget extends Component
 
     public function mount($widget)
     {
-        $this->widget = $widget ?? collect();
+        $this->widget = Widget::findOrFail($widget) ?? collect();
         $this->widget->details = json_decode($this->widget->details, true);
     }
 
